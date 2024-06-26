@@ -1,8 +1,6 @@
 package com.miller.learn.exceptions;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,24 @@ public class ListOfNumbers {
                 out.println("Value at: " + i + " = " + list.get(i));
             }
         }
+    }
+
+    public void readList(String fileName) throws IOException {
+        try(FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr))
+        {
+            String line;
+            while((line = br.readLine()) != null) {
+                try {
+                    int number = Integer.parseInt(line);
+                    list.add(number);
+                    System.out.println(number);
+                } catch (NumberFormatException e) {
+                    System.err.println("Error: Non integer data encountered" + line);
+                }
+            }
+        }
+
     }
 
 }
